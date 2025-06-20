@@ -1,39 +1,29 @@
 <template>
   <div class="q-pa-md">
-    <q-card class="q-pa-lg shadow-2 rounded-borders" style="max-width: 800px; margin: auto;">
-      <h2 class="text-h5 q-mb-md">📝 Kunde hinzufügen / bearbeiten</h2>
-      <q-form @submit.prevent="submitForm">
-        <q-input v-model="form.nachname" label="Nachname" class="q-mb-sm" filled required />
-        <q-input v-model="form.vorname" label="Vorname" class="q-mb-sm" filled required />
-        <q-input v-model="form.email" label="E-Mail" class="q-mb-sm" filled type="email" required />
-        <q-input v-model="form.telefon" label="Telefon" class="q-mb-sm" filled required />
-        <q-input v-model="form.strasse" label="Straße" class="q-mb-sm" filled required />
-        <q-input v-model="form.plz" label="PLZ" class="q-mb-sm" filled required />
-        <q-input v-model="form.ort" label="Ort" class="q-mb-sm" filled required />
-
-        <div class="row q-mt-md">
-          <q-btn :label="editingId ? 'Aktualisieren' : 'Speichern'" color="primary" type="submit" class="q-mr-sm" />
-          <q-btn v-if="editingId" label="Abbrechen" color="secondary" flat @click="resetForm" />
-        </div>
-      </q-form>
-    </q-card>
-
-    <q-card class="q-pa-md q-mt-xl shadow-1" style="max-width: 1000px; margin: 40px auto;">
-      <h2 class="text-h6 q-mb-md">📋 Kundenliste</h2>
-      <q-table :rows="customers" :columns="columns" row-key="id" flat bordered>
-        <template v-slot:body-cell-actions="props">
-          <q-btn dense icon="edit" color="primary" @click="editCustomer(props.row)" round size="sm" class="q-mr-xs" />
-          <q-btn dense icon="delete" color="negative" @click="deleteCustomer(props.row.id)" round size="sm" />
-
-        </template>
-      </q-table>
-    </q-card>
+    <CustomerForm
+      :form="form"
+      :editing-id="editingId"
+      @submit="submitForm"
+      @cancel="resetForm"
+    />
+    
+    <CustomerTable
+      :customers="customers"
+      @edit="editCustomer"
+      @delete="deleteCustomer"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+
+import CustomerForm from 'src/components/CustomerForm.vue'
+import CustomerTable from 'src/components/CustomerTable.vue'
+
+const customers = ref([])
+const editingId = ref(null)
 
 const form = ref({
   nachname: '',
@@ -42,22 +32,8 @@ const form = ref({
   telefon: '',
   strasse: '',
   plz: '',
-  ort: '',
+  ort: ''
 })
-
-const editingId = ref(null)
-const customers = ref([])
-
-const columns = [
-  { name: 'nachname', label: 'Nachname', field: 'nachname' },
-  { name: 'vorname', label: 'Vorname', field: 'vorname' },
-  { name: 'email', label: 'E-Mail', field: 'email' },
-  { name: 'telefon', label: 'Telefon', field: 'telefon' },
-  { name: 'strasse', label: 'Straße', field: 'strasse' },
-  { name: 'plz', label: 'PLZ', field: 'plz' },
-  { name: 'ort', label: 'Ort', field: 'ort' },
-  { name: 'actions', label: 'Aktion', field: 'actions', sortable: false },
-]
 
 const fetchCustomers = async () => {
   try {
@@ -106,6 +82,7 @@ const deleteCustomer = async (id) => {
 }
 
 
+
 const resetForm = () => {
   form.value = {
     nachname: '',
@@ -114,7 +91,7 @@ const resetForm = () => {
     telefon: '',
     strasse: '',
     plz: '',
-    ort: '',
+    ort: ''
   }
   editingId.value = null
 }
@@ -123,7 +100,7 @@ onMounted(fetchCustomers)
 </script>
 
 <style scoped>
-.q-card {
-  border-radius: 12px;
+.q-pa-md {
+  padding-bottom: 100px;
 }
 </style>
