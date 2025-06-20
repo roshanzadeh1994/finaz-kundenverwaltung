@@ -1,7 +1,7 @@
 
 
 <template>
-  <q-card class="q-pa-md q-mt-xl shadow-1" style="max-width: 1400px; width: 110%; margin: 40px auto;">
+  <q-card class="q-pa-md q-mt-xl shadow-1" style="max-width: 1200px; width: 90%; margin: 40px auto;">
     <h2 class="text-h6 q-mb-md">📋 Kundenliste</h2>
 
     <div class="row q-col-gutter-md q-mb-md">
@@ -15,25 +15,28 @@
     <q-table :rows="filteredCustomers"
                     :columns="columns" row-key="id" flat bordered class="q-mt-md shadow-3 big-table" table-class="text-left"
                     table-header-class="bg-primary text-white text-bold" dense="false" wrap-cells>
-    <template v-slot:body-cell-actions="props">
-                    <q-btn
+            <template v-slot:body-cell-actions="props">
+                    <div class="action-buttons">
+                        <q-btn
                         dense
                         icon="edit"
                         color="primary"
                         @click="() => $emit('edit', props.row)"
                         round
                         size="sm"
-                    />
-                    <q-btn
-                            dense
-                            icon="delete"
-                            color="negative"
-                            @click="() => emit('delete-request', props.row.id)"
-                            round
-                            size="sm"
-                            />
-
+                        />
+                        <q-btn
+                        dense
+                        icon="delete"
+                        color="negative"
+                        @click="() => emit('delete-request', props.row.id)"
+                        round
+                        size="sm"
+                        class="q-ml-sm"
+                        />
+                    </div>
         </template>
+
 
 
 
@@ -132,4 +135,12 @@ const columns = [
 .q-table td {
   text-align: center;
 }
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
 </style>
