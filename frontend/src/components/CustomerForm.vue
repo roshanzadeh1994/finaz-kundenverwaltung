@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: Object,
@@ -28,12 +28,17 @@ const props = defineProps({
 
 const emits = defineEmits(['submit', 'cancel', 'update:modelValue'])
 
-const localForm = ref({ ...props.modelValue })
+const localForm = ref({})
 
+onMounted(() => {
+  localForm.value = { ...props.modelValue }
+})
+
+// هر تغییری در فرم، به والد منتقل میشه
 watch(
-  () => props.modelValue,
+  localForm,
   (newVal) => {
-    localForm.value = { ...newVal }
+    emits('update:modelValue', newVal)
   },
   { deep: true }
 )
@@ -47,8 +52,19 @@ const onCancel = () => {
 }
 </script>
 
+
 <style scoped>
 .q-card {
-  border-radius: 12px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.q-input {
+  font-size: 16px;
+}
+
+.q-btn {
+  font-size: 16px;
+  padding: 10px 16px;
 }
 </style>
