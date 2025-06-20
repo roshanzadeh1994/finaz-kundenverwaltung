@@ -1,11 +1,12 @@
 <template>
   <div class="q-pa-md">
     <CustomerForm
-      :form="form"
-      :editing-id="editingId"
-      @submit="submitForm"
-      @cancel="resetForm"
-    />
+  v-model="form"
+  :editing-id="editingId"
+  @submit="submitForm"
+  @cancel="resetForm"
+/>
+
     
     <CustomerTable
       :customers="customers"
@@ -44,23 +45,30 @@ const fetchCustomers = async () => {
   }
 }
 
-const submitForm = async () => {
+const submitForm = async (formData) => {
   try {
     if (editingId.value) {
-      await axios.put(`http://localhost:8000/api/customers/${editingId.value}`, form.value)
+      await axios.put(`http://localhost:8000/api/customers/${editingId.value}`, formData)
       alert('Kunde erfolgreich aktualisiert ✅')
     } else {
-      await axios.post('http://localhost:8000/api/customers', form.value)
+      await axios.post('http://localhost:8000/api/customers', formData)
       alert('Kunde erfolgreich gespeichert ✅')
     }
 
     resetForm()
     await fetchCustomers()
   } catch (err) {
-    console.error('Fehler beim Speichern:', err)
-    alert('Fehler beim Speichern')
+    if (err.response && err.response.data && err.response.data.errors) {
+      alert('Fehler:\n' + JSON.stringify(err.response.data.errors, null, 2))
+    } else {
+      alert('Unbekannter Fehler beim Speichern')
+    }
   }
 }
+
+
+
+
 
 const editCustomer = (customer) => {
   form.value = { ...customer }
