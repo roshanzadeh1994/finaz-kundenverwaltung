@@ -1,27 +1,29 @@
-# Finaz Kundenverwaltung
+# Kundenverwaltung – Programmieraufgabe
 
-Dieses Projekt ist eine einfache Kundenverwaltungssoftware mit einem Laravel-Backend und einem Vue 3 + Quasar-Frontend.  
-Das Ziel war es, die Applikation vollständig mit Docker bereitzustellen, sodass sie lokal oder auf einem Server ohne komplizierte Einrichtung gestartet werden kann.
+Dies ist eine vollständige Umsetzung der gestellten Programmieraufgabe zur Kundenverwaltung, wie sie im Rahmen eines Vorstellungsgesprächs übermittelt wurde.
 
-## Inhalt
+Die Applikation ermöglicht es, Kundendaten zu erfassen, zu suchen, zu bearbeiten und zu löschen. Sie ist mit **Laravel (Backend)** und **Vue 3 + Quasar (Frontend)** entwickelt und vollständig über **Docker** containerisiert.
 
-- Laravel (PHP 8.2)
-- Vue 3 + Quasar
-- MySQL 8
-- Docker & Docker Compose
+🔗 GitHub Repository: [https://github.com/roshanzadeh1994/finaz-kundenverwaltung](https://github.com/roshanzadeh1994/finaz-kundenverwaltung)
 
 ---
 
-## Projekt starten
+## 📦 Voraussetzungen
 
-### Voraussetzungen
+Bitte stellen Sie sicher, dass folgende Komponenten auf Ihrem System installiert sind:
 
-- Docker muss installiert sein: [https://www.docker.com](https://www.docker.com)
-- Optional: Git für das Klonen des Repositories
+- **Docker** (mindestens Version 20.x)
+- **Docker Compose**
+
+Es sind **keine lokalen Installationen** von PHP, Node.js oder MySQL notwendig – alles wird containerisiert bereitgestellt.
 
 ---
 
-### Repository klonen
+## 🚀 Projekt starten
+
+Bitte führen Sie folgende Schritte aus, um die Applikation zu klonen und zu starten:
+
+### 1. Repository klonen
 
 ```bash
 git clone https://github.com/roshanzadeh1994/finaz-kundenverwaltung.git
