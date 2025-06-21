@@ -15,12 +15,16 @@ Das Projekt implementiert ein einfaches Kundenverwaltungssystem mit einem Larave
 
 ---
 
-## ▶️ Projekt starten
-
-Führen Sie bitte die folgenden Schritte im Terminal aus:
-
-### 1. Repository klonen
+# 🚀 Projekt starten
 
 ```bash
+# 1. Repository klonen
 git clone https://github.com/roshanzadeh1994/finaz-kundenverwaltung.git
 cd finaz-kundenverwaltung
+
+# 2. .env-Datei kopieren
+cp backend/.env.example backend/.env
+
+# 3. Docker Container bauen und starten
+docker-compose up --build
+
