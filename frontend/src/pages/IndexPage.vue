@@ -1,5 +1,6 @@
 <template>
   <div class="q-pa-md">
+    <!-- Tabs zur Navigation zwischen Kunden-Hinzufügen und -Suchen -->
     <q-tabs v-model="tab" class="text-primary">
       <q-tab name="add" label="🆕 Kunde hinzufügen" />
       <q-tab name="search" label="🔍 Kunde suchen" />
@@ -7,24 +8,24 @@
 
     <q-separator class="q-my-md" />
 
+    <!-- Inhalt je nach gewähltem Tab -->
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="add">
+        <!-- Formular zum Hinzufügen oder Bearbeiten eines Kunden -->
         <CustomerForm
           v-model="form"
           :editing-id="editingId"
           @submit="submitForm"
           @cancel="resetForm"
-        />  
-
+        />
       </q-tab-panel>
 
       <q-tab-panel name="search">
+        <!-- Tabelle zur Kundensuche und -bearbeitung -->
         <CustomerTable
-            :customers="customers"
-            @edit="editCustomer"
-            @delete-request="confirmDeleteCustomer"
-          />
-
+          :customers="customers"
+          @edit="editCustomer"
+          @delete-request="confirmDeleteCustomer"
         />
       </q-tab-panel>
     </q-tab-panels>
@@ -34,16 +35,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
 import CustomerForm from 'src/components/CustomerForm.vue'
 import CustomerTable from 'src/components/CustomerTable.vue'
-
 import { useQuasar } from 'quasar'
 
-
 const $q = useQuasar()
-const tab = ref('add') // default tab
-
+const tab = ref('add') // Start-Tab auf "add"
 const customers = ref([])
 const editingId = ref(null)
 
@@ -57,6 +54,7 @@ const form = ref({
   ort: ''
 })
 
+/* Lädt die Kundenliste vom Server */
 const fetchCustomers = async () => {
   try {
     const response = await axios.get('http://localhost:8000/api/customers')
@@ -66,6 +64,7 @@ const fetchCustomers = async () => {
   }
 }
 
+/* Speichern oder Aktualisieren eines Kunden */
 const submitForm = async (formData) => {
   try {
     if (editingId.value) {
@@ -74,8 +73,8 @@ const submitForm = async (formData) => {
         type: 'positive',
         message: '✅ Kunde erfolgreich aktualisiert!',
         timeout: 3000,
-        position: 'center',     // نمایش وسط صفحه
-        classes: 'text-h6 bg-green text-white'  // استایل بزرگ‌تر و رنگی
+        position: 'center',
+        classes: 'text-h6 bg-green text-white'
       })
     } else {
       await axios.post('http://localhost:8000/api/customers', formData)
@@ -83,16 +82,14 @@ const submitForm = async (formData) => {
         type: 'positive',
         message: '✅ Kunde erfolgreich gespeichert!',
         timeout: 3000,
-        position: 'center',     // نمایش وسط صفحه
-        classes: 'text-h6 bg-primary text-white'  // استایل بزرگ‌تر و رنگی
+        position: 'center',
+        classes: 'text-h6 bg-primary text-white'
       })
     }
 
     resetForm()
     await fetchCustomers()
-
-    // انتقال به تب سرچ
-    tab.value = 'search'
+    tab.value = 'search' // Nach Speichern zur Suchseite wechseln
   } catch (err) {
     $q.notify({
       type: 'negative',
@@ -105,8 +102,7 @@ const submitForm = async (formData) => {
   }
 }
 
-
-
+/* Öffnet einen Bestätigungsdialog vor dem Löschen */
 const confirmDeleteCustomer = async (id) => {
   $q.dialog({
     title: '❗ Kunde löschen',
@@ -126,8 +122,7 @@ const confirmDeleteCustomer = async (id) => {
   })
 }
 
-
-
+/* Löscht einen Kunden endgültig */
 const deleteCustomer = async (id) => {
   try {
     await axios.delete(`http://localhost:8000/api/customers/${id}`)
@@ -148,15 +143,14 @@ const deleteCustomer = async (id) => {
   }
 }
 
-
-
-
+/* Befüllt das Formular mit Daten eines Kunden zum Bearbeiten */
 const editCustomer = (customer) => {
   form.value = { ...customer }
   editingId.value = customer.id
-  tab.value = 'add' // beim Editieren automatisch auf Add-Form wechseln
+  tab.value = 'add' // Wechsel automatisch zum "add"-Tab
 }
 
+/* Setzt das Formular zurück und entfernt den Bearbeitungsmodus */
 const resetForm = () => {
   form.value = {
     nachname: '',
@@ -170,6 +164,7 @@ const resetForm = () => {
   editingId.value = null
 }
 
+// Initiales Laden der Kunden
 onMounted(fetchCustomers)
 </script>
 
@@ -178,3 +173,4 @@ onMounted(fetchCustomers)
   padding-bottom: 100px;
 }
 </style>
+
