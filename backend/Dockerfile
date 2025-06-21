@@ -30,8 +30,12 @@ RUN composer install
 
 RUN apt-get update && apt-get install -y netcat-openbsd
 
+COPY . .
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && apache2-foreground"]
