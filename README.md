@@ -24,5 +24,5 @@ Das Ziel war es, die Applikation vollständig mit Docker bereitzustellen, sodass
 ### Repository klonen
 
 ```bash
-git clone https://github.com/DEIN-GITHUB-NAME/finaz-kundenverwaltung.git
+git clone https://github.com/roshanzadeh1994/finaz-kundenverwaltung.git
 cd finaz-kundenverwaltung
