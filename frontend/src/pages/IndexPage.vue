@@ -171,6 +171,7 @@ onMounted(fetchCustomers)
 <style scoped>
 .q-pa-md {
   padding-bottom: 100px;
-}
+}  
+
 </style>
 
