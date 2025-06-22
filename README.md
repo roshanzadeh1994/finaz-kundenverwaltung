@@ -27,6 +27,7 @@ git clone https://github.com/roshanzadeh1994/finaz-kundenverwaltung.git
 - cd finaz-kundenverwaltung
 - cp backend/.env.example backend/.env
 - docker-compose up --build
+- http://localhost:8080
 
 ## 🧪 Tests & Datenbank
 
