@@ -22,7 +22,8 @@ RUN composer install
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html/storage
 
 
-COPY ../docker-scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

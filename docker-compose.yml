@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-         - laravel-app:/var/www/html
+      - ./backend:/var/www/html
     networks:
       - app-network
     depends_on:
@@ -42,5 +42,4 @@ networks:
   app-network:
 
 volumes:
-  laravel-app:
   dbdata:
