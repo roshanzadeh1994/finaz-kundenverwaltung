@@ -1,7 +1,6 @@
 # Finaz Kundenverwaltung
 
 Willkommen!  
-Dies ist die Lösung der technischen Programmieraufgabe im Rahmen eines Bewerbungsgesprächs.
 
 Ein Kundenverwaltungssystem mit **Vue3-Frontend (Quasar Framework)** , **Laravel-Backend** und **Docker**
 
